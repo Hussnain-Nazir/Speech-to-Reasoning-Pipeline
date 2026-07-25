@@ -58,16 +58,3 @@ GPU (16 GB VRAM).
    you want to test your own audio.
 5. Results (transcriptions and reasoning responses) are printed inline and saved to
    `Speech-to-Reasoning-Pipeline/outputs/pipeline_results.txt`.
-
-## Key Design Decisions
-
-- **Single self-contained notebook** - no external file dependencies, matching internship
-  submission preferences.
-- **No emojis** anywhere in code, comments, markdown, or generated output.
-- **Sequential model loading** - Whisper is explicitly unloaded (`del` + `gc.collect()` +
-  `torch.cuda.empty_cache()`) before the reasoning LLM is loaded, to avoid out-of-memory errors
-  from holding two models on the GPU simultaneously on a free-tier T4.
-- **Standard chat templating** - the reasoning model's prompt is built with the tokenizer's native
-  `apply_chat_template()` method rather than any custom/experimental chat-template import.
-- **Self-contained testing** - sample audio is generated on the fly with gTTS so the notebook can
-  be graded/run without requiring any external audio files.
